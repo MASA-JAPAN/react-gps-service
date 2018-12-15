@@ -4,6 +4,7 @@ import axios from 'axios';
 import SearchForm from './SearchForm';
 import GeocodeResult from './GeocodeResult'
 import ApiKey from './Key'
+import Map from './Map'
 
 const GEOCODE_ENDPOINT = 'https://maps.googleapis.com/maps/api/geocode/json'
 
@@ -65,9 +66,11 @@ handlePlaceSubmit(place){
         lat={this.state.lat}
         lng={this.state.lng}
         />
+      <Map lat={this.state.lat} lng={this.state.lng}/>
       </div>
     );
   }
 }
+
 
 export default App;
