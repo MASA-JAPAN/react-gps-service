@@ -13,8 +13,8 @@ code {
     monospace;
 }
 
+@import 'reset.css';
 @import 'App.css';
-
 @import 'GeocodeResult.css';
-
-@import 'Map.css'
+@import 'Map.css';
+@import 'SearchForm.css';

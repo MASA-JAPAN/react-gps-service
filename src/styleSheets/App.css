@@ -1,5 +1,19 @@
 .App {
+  width: 1000px;
+  margin: 0 auto;
+}
+
+.App-title{
   text-align: center;
+}
+
+.result-area{
+  display: flex;
+}
+
+.result-right{
+  margin-left: 20px;
+
 }
 
 .App-logo {

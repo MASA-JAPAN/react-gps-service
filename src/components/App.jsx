@@ -1,44 +1,44 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+
 
 import SearchForm from './SearchForm';
 import GeocodeResult from './GeocodeResult'
-import ApiKey from './Key'
 import Map from './Map'
+import HotelsTable from './HotelsTable'
 
-const GEOCODE_ENDPOINT = 'https://maps.googleapis.com/maps/api/geocode/json'
+import {geocode} from '../domain/Geocoder'
+import {searchHotelByLocation} from '../domain/HotelRepository';
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state={
+      location:{
+        lat:35.6585,
+        lng:139.7454,
+      },
+      hotels: [
+
+      ],
     };
   }
 
 setErrorMessage(message){
   this.setState({
     address: message,
-    lat: 0,
-    lng: 0,
-  })
+    location:{
+      lat:0,
+      lng:0,
+    },
+  });
 }
 
 handlePlaceSubmit(place){
-  axios.get(GEOCODE_ENDPOINT,{params:{address:place, key:ApiKey}}).then((results) => {
-    console.log(results);
-    const data = results.data;
-    const result = results.data.results[0];
-
-    switch (data.status){
+  geocode(place).then(({status,address, location}) => {
+    switch (status){
       case 'OK': {
-        const location = result.geometry.location;
-        this.setState({
-          address: result.formatted_address,
-          lat: location.lat,
-          lng: location.lng
-
-        });
-        break;
+        this.setState({ address, location });
+        return searchHotelByLocation(location);
       }
       case 'ZERO_RESULTS' : {
         this.setErrorMessage('結果が見つかりませんでした');
@@ -50,23 +50,32 @@ handlePlaceSubmit(place){
 
       }
     }
-  }).catch(() => {
+    return [];
+  })
+  .then((hotels)=>{
+    this.setState({hotels});
+  })
+  .catch(() => {
     this.setErrorMessage('通信に失敗しました')
-  }
-  );
+  });
 }
 
   render() {
     return (
       <div className="App">
-        <h1>緯度経度検索</h1>
+        <h1 className="App-title">ホテル検索</h1>
         <SearchForm onSubmit={place => this.handlePlaceSubmit(place)}/>
-        <GeocodeResult 
-        address={this.state.address}
-        lat={this.state.lat}
-        lng={this.state.lng}
-        />
-      <Map lat={this.state.lat} lng={this.state.lng}/>
+        <div className="result-area">
+          <Map location={this.state.location}/>
+          <div className="result-right">
+            <GeocodeResult 
+            address={this.state.address}
+            location={this.state.location}
+            />
+            <h2>ホテル検索結果</h2>
+            <HotelsTable hotels={this.state.hotels}/>            
+          </div>
+        </div>
       </div>
     );
   }

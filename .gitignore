@@ -23,4 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 # key
-/src/components/key.jsx
+/src/domain/key.jsx
+/src/domain/HotelRepository.js
