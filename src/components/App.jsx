@@ -17,9 +17,7 @@ class App extends Component {
         lat:35.6585,
         lng:139.7454,
       },
-      hotels: [
-
-      ],
+      hotels: [],
     };
   }
 
