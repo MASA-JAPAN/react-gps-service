@@ -18,4 +18,5 @@ code {
 @import 'GeocodeResult.css';
 @import 'Map.css';
 @import 'SearchForm.css';
-@import 'HotelsTable.css'
+@import 'HotelsTable.css';
+@import 'HotelsClickableTh.css';
