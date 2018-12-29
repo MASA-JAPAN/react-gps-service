@@ -12,7 +12,7 @@ import AboutPage from './AboutPage';
 const App =()=> (
   <Router>
   <div className="App">
-    <ul className='left-navi'>
+    <ul className="left-navi">
       <li><Link to="/">ホテル検索</Link></li>
       <li><Link to="/about">About</Link></li>
     </ul>

@@ -1,7 +1,17 @@
 import React from 'react';
-const HotelsClickableTh = ({label,sortKey,isSelected,onSort}) => (
-    <th className="hotel-clickable-th" onClick={() => onSort(sortKey)}>
-    {label}{isSelected ? '▲':''}</th>
+import {connect} from 'react-redux';
+
+import {setSortKey} from '../actions/';
+
+const HotelsClickableTh = (props) => (
+    <th className="hotels-clickable-th" 
+    onClick={() => props.setSortKey(props.sortKey)}>
+    {props.label}{props.isSelected ? '▲':''}</th>
 );
 
-export default HotelsClickableTh;
+export default connect(
+    (state, ownProps) => ({
+        isSelected: ownProps.sortKey===state.sortKey,
+      }),
+      {setSortKey},
+    )(HotelsClickableTh);

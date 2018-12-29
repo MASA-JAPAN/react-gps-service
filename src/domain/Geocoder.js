@@ -9,7 +9,7 @@ export const geocode = place =>
         console.log(results);
         const data = results.data;
         const status = data.status;
-        const result = results.data.results[0];
+        const result = data.results[0];
         if(typeof result === 'undefined'){
             return{status};
         }
